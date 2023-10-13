@@ -9,11 +9,34 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.id
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
+            'is_active': self.is_active,
+            'calificacion':  5
+            # do not serialize the password, its a security breach
+        }
+
+
+class Estudio(db.Model):
+    __tablename__ = 'estudio'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(250), nullable=False)
+    logo = db.Column(db.String(250), nullable=False)
+    slogan = db.Column(db.String(250), nullable=False)        
+
+
+    def __repr__(self):
+        return '<Estudio %r>' % self.nombre
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
             # do not serialize the password, its a security breach
         }
