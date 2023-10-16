@@ -28,7 +28,9 @@ class Estudio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(250), nullable=False)
     logo = db.Column(db.String(250), nullable=False)
-    slogan = db.Column(db.String(250), nullable=False)        
+    slogan = db.Column(db.String(250), nullable=False)    
+    videojuegos = db.relationship('Videojuego', backref='estudio', lazy=True)
+    
 
 
     def __repr__(self):
@@ -40,3 +42,26 @@ class Estudio(db.Model):
             "nombre": self.nombre,
             # do not serialize the password, its a security breach
         }
+
+class Videojuego(db.Model):
+    __tablename__ = 'videojuego'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(250), nullable=False)
+    genero = db.Column(db.String(250), nullable=False)
+    anio_lanzmaineto  = db.Column(db.String(250), nullable=False)      
+    estudio_id = db.Column(db.Integer, db.ForeignKey('estudio.id'),
+        nullable=False) 
+
+
+
+    def __repr__(self):
+        return '<Videojuego %r>' % self.nombre
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            # do not serialize the password, its a security breach
+        }        

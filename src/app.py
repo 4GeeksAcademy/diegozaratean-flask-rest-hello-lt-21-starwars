@@ -67,6 +67,23 @@ def get_estudio(estudio_id):
 
     return jsonify(estudio.serialize()), 200    
 
+
+@app.route('/estudio', methods=['POST'])
+def crear_estudio():
+    print(request.get_json())
+    print(request.get_json()['nombre'])
+
+
+    body = request.get_json()    
+    estudio = Estudio(nombre=body['nombre'],logo=body['logo'],slogan=body['slogan'] )
+    db.session.add(estudio)
+    db.session.commit()
+    response_body = {
+        "msg": "crear un estudio "
+    }
+
+    return jsonify(response_body), 200
+
 # FINAL DE CODIGO
 
 # this only runs if `$ python src/app.py` is executed
